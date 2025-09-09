@@ -8,8 +8,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   ScrollView,
-  Keyboard,
-  TouchableWithoutFeedback,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuth } from "../src/contexts/AuthContext";
@@ -131,70 +129,67 @@ export default function AuthScreen() {
       >
         <KeyboardAvoidingView
           style={{ flex: 1 }}
-          behavior={Platform.OS === "ios" ? undefined : "height"}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-            <ScrollView
-              contentContainerStyle={styles.scrollContainer}
-              keyboardShouldPersistTaps="handled"
-            >
-              <Text style={styles.title}>
-                {isLogin ? "Welcome Back" : "Create Account"}
-              </Text>
+          <View style={styles.scrollContainer}>
+            <Text style={styles.title}>
+              {isLogin ? "Welcome Back" : "Create Account"}
+            </Text>
 
+            <TextInput
+              style={styles.input}
+              placeholder="Email"
+              placeholderTextColor={theme.colors.textSecondary}
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoComplete="email"
+            />
+
+            <View style={styles.passwordContainer}>
               <TextInput
-                style={styles.input}
-                placeholder="Email"
+                style={styles.passwordInput}
+                placeholder="Password"
                 placeholderTextColor={theme.colors.textSecondary}
-                value={email}
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+                autoComplete="password"
               />
-
-              <View style={styles.passwordContainer}>
-                <TextInput
-                  style={styles.passwordInput}
-                  placeholder="Password"
-                  placeholderTextColor={theme.colors.textSecondary}
-                  value={password}
-                  onChangeText={setPassword}
-                  secureTextEntry={!showPassword}
+              <TouchableOpacity
+                style={styles.passwordToggle}
+                onPress={() => setShowPassword(!showPassword)}
+              >
+                <Ionicons
+                  name={showPassword ? "eye-off-outline" : "eye-outline"}
+                  size={20}
+                  color={theme.colors.textSecondary}
                 />
-                <TouchableOpacity
-                  style={styles.passwordToggle}
-                  onPress={() => setShowPassword(!showPassword)}
-                >
-                  <Ionicons
-                    name={showPassword ? "eye-off-outline" : "eye-outline"}
-                    size={20}
-                    color={theme.colors.textSecondary}
-                  />
-                </TouchableOpacity>
-              </View>
-
-              <TouchableOpacity
-                style={styles.button}
-                onPress={handleAuth}
-                disabled={loading}
-              >
-                <Text style={styles.buttonText}>
-                  {loading ? "Loading..." : isLogin ? "Sign In" : "Sign Up"}
-                </Text>
               </TouchableOpacity>
+            </View>
 
-              <TouchableOpacity
-                style={styles.switchButton}
-                onPress={() => setIsLogin(!isLogin)}
-              >
-                <Text style={styles.switchText}>
-                  {isLogin
-                    ? "Don't have an account? Sign Up"
-                    : "Already have an account? Sign In"}
-                </Text>
-              </TouchableOpacity>
-            </ScrollView>
-          </TouchableWithoutFeedback>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handleAuth}
+              disabled={loading}
+            >
+              <Text style={styles.buttonText}>
+                {loading ? "Loading..." : isLogin ? "Sign In" : "Sign Up"}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.switchButton}
+              onPress={() => setIsLogin(!isLogin)}
+            >
+              <Text style={styles.switchText}>
+                {isLogin
+                  ? "Don't have an account? Sign Up"
+                  : "Already have an account? Sign In"}
+              </Text>
+            </TouchableOpacity>
+          </View>
         </KeyboardAvoidingView>
       </SafeAreaView>
     </AuthGuard>
