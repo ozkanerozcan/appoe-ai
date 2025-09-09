@@ -57,7 +57,6 @@ export default function AuthScreen() {
       backgroundColor: theme.colors.background,
     },
     scrollContainer: {
-      flexGrow: 1,
       justifyContent: "center",
       padding: 20,
     },
