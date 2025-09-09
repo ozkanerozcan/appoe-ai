@@ -39,6 +39,7 @@ export default function TimeLogFormScreen() {
   const isEditingArchive = !!isArchiveEdit;
 
   const [formData, setFormData] = useState({
+    title: "",
     description: "",
     location: "",
     duration: "",
@@ -126,6 +127,7 @@ export default function TimeLogFormScreen() {
       }
 
       setFormData({
+        title: data.title || "",
         description: data.description || "",
         location: data.location || "",
         duration: data.duration || "",
@@ -142,6 +144,11 @@ export default function TimeLogFormScreen() {
 
   const handleSave = async () => {
     console.log("handleSave called with formData:", formData);
+
+    if (!formData.title.trim()) {
+      showToast("error", "Please enter a title");
+      return;
+    }
 
     if (!formData.location) {
       showToast("error", "Please select a location");
@@ -172,6 +179,7 @@ export default function TimeLogFormScreen() {
     console.log("Submitting with duration:", duration);
 
     const submitData = {
+      title: formData.title.trim(),
       description: formData.description || "",
       location: formData.location || null,
       duration: duration,
@@ -583,6 +591,24 @@ export default function TimeLogFormScreen() {
             keyboardDismissMode="interactive"
             showsVerticalScrollIndicator={false}
           >
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>
+                Title <Text style={styles.required}>*</Text>
+              </Text>
+              <TextInput
+                ref={titleInputRef}
+                style={styles.input}
+                placeholder="Enter time log title..."
+                placeholderTextColor={theme.colors.textSecondary}
+                value={formData.title}
+                onChangeText={(text) =>
+                  setFormData({ ...formData, title: text })
+                }
+                returnKeyType="next"
+                onFocus={() => scrollToInput(titleInputRef)}
+              />
+            </View>
+
             <View style={styles.inputGroup}>
               <Text style={styles.label}>
                 Location <Text style={styles.required}>*</Text>

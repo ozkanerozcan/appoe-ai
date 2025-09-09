@@ -5,13 +5,7 @@ export const locationService = {
   async getAll() {
     const { data, error } = await supabase
       .from("locations")
-      .select(
-        `
-        *,
-        created_by_profile:profiles!locations_created_by_fkey(id, full_name),
-        updated_by_profile:profiles!locations_updated_by_fkey(id, full_name)
-      `
-      )
+      .select("*")
       .order("created_at", { ascending: false });
 
     if (error) throw error;

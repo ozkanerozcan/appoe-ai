@@ -5,13 +5,7 @@ export const projectService = {
   async getAll() {
     const { data, error } = await supabase
       .from("projects")
-      .select(
-        `
-        *,
-        created_by_profile:profiles!projects_created_by_fkey(id, full_name),
-        updated_by_profile:profiles!projects_updated_by_fkey(id, full_name)
-      `
-      )
+      .select("*")
       .order("created_at", { ascending: false });
 
     if (error) throw error;
