@@ -57,7 +57,9 @@ export default function AuthScreen() {
       backgroundColor: theme.colors.background,
     },
     scrollContainer: {
+      flex: 1,
       justifyContent: "center",
+      alignItems: "center",
       padding: 20,
     },
     title: {
@@ -76,10 +78,12 @@ export default function AuthScreen() {
       color: theme.colors.text,
       borderWidth: 1,
       borderColor: theme.colors.border,
+      width: "100%",
     },
     passwordContainer: {
       position: "relative",
       marginBottom: 16,
+      width: "100%",
     },
     passwordInput: {
       backgroundColor: theme.colors.surface,
@@ -90,6 +94,7 @@ export default function AuthScreen() {
       color: theme.colors.text,
       borderWidth: 1,
       borderColor: theme.colors.border,
+      width: "100%",
     },
     passwordToggle: {
       position: "absolute",
@@ -104,6 +109,7 @@ export default function AuthScreen() {
       alignItems: "center",
       marginBottom: 16,
       opacity: loading ? 0.7 : 1,
+      width: "100%",
     },
     buttonText: {
       color: theme.colors.onPrimary,

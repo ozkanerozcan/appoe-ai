@@ -591,7 +591,6 @@ export default function TaskFormScreen() {
                   setFormData({ ...formData, deadline_at: date })
                 }
                 placeholder="Select deadline date"
-                minimumDate={new Date()}
               />
             </View>
 
