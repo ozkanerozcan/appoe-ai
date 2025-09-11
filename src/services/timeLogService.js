@@ -15,7 +15,8 @@ export const timeLogService = {
         *,
         tasks:task (
           id,
-          title
+          title,
+          description
         ),
         locations:location (
           id,
@@ -44,7 +45,8 @@ export const timeLogService = {
         *,
         tasks:task (
           id,
-          title
+          title,
+          description
         ),
         locations:location (
           id,

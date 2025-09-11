@@ -353,7 +353,13 @@ export default function TimeLogsScreen() {
   const renderTimeLog = ({ item }) => (
     <Card
       id={item.id}
-      subtitle={item.tasks?.title ? `Task: ${item.tasks.title}` : null}
+      subtitle={
+        item.tasks?.title
+          ? `Task: ${item.tasks.title}${
+              item.tasks.description ? ` - ${item.tasks.description}` : ""
+            }`
+          : null
+      }
       description={item.description || ""}
       created_at={item.created_at}
       updated_at={item.updated_at}

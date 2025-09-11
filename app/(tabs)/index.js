@@ -697,6 +697,15 @@ export default function DashboardScreen() {
     return `${day}/${month}/${year}`;
   };
 
+  // Helper function to format status to human readable
+  const formatStatus = (status) => {
+    if (!status) return "Pending";
+    return status
+      .split("_")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(" ");
+  };
+
   if (loading) {
     return (
       <SafeAreaView style={styles.container} edges={["top", "left", "right"]}>
@@ -803,13 +812,15 @@ export default function DashboardScreen() {
                 onPress={() => router.push(`/tasks?id=${task.id}`)}
               >
                 <Text style={styles.deadlineItemTitle}>{task.title}</Text>
+                {task.description && (
+                  <Text style={styles.deadlineItemMeta}>
+                    {task.description.substring(0, 50)}
+                    {task.description.length > 50 ? "..." : ""}
+                  </Text>
+                )}
                 <Text style={styles.deadlineItemMeta}>
-                  {task.description &&
-                    `${task.description.substring(0, 50)}${
-                      task.description.length > 50 ? "..." : ""
-                    } • `}
                   {task.projects && `${task.projects.title} • `}
-                  Status: {task.status || "pending"}
+                  Status: {formatStatus(task.status || "pending")}
                 </Text>
                 <Text style={styles.deadlineDate}>
                   Overdue: {formatDateDDMMYYYY(task.deadline_at)}
@@ -837,13 +848,15 @@ export default function DashboardScreen() {
                   onPress={() => router.push(`/tasks?id=${task.id}`)}
                 >
                   <Text style={styles.deadlineItemTitle}>{task.title}</Text>
+                  {task.description && (
+                    <Text style={styles.deadlineItemMeta}>
+                      {task.description.substring(0, 50)}
+                      {task.description.length > 50 ? "..." : ""}
+                    </Text>
+                  )}
                   <Text style={styles.deadlineItemMeta}>
-                    {task.description &&
-                      `${task.description.substring(0, 50)}${
-                        task.description.length > 50 ? "..." : ""
-                      } • `}
                     {task.projects && `${task.projects.title} • `}
-                    Status: {task.status || "pending"}
+                    Status: {formatStatus(task.status || "pending")}
                   </Text>
                   <Text style={styles.deadlineDate}>
                     Due: {formatDateDDMMYYYY(task.deadline_at)}

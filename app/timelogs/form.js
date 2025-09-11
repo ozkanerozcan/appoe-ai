@@ -98,7 +98,7 @@ export default function TimeLogFormScreen() {
         taskService.getAll(),
       ]);
       setLocations(locationsData);
-      setTasks(tasksData);
+      setTasks(tasksData.filter((task) => task.status !== "done"));
     } catch (error) {
       console.error("Error loading data:", error);
       showToast("error", "Failed to load data");
@@ -230,7 +230,7 @@ export default function TimeLogFormScreen() {
 
   const getTaskDisplayName = (task) => {
     if (!task) return "";
-    return task.title;
+    return `${task.title}${task.description ? ` - ${task.description}` : ""}`;
   };
 
   const getFilteredLocations = () => {
@@ -830,8 +830,10 @@ export default function TimeLogFormScreen() {
                     keyExtractor={(item) => item.id}
                     renderItem={({ item }) => {
                       const isSelected = item.id === formData.task;
-                      // Display only task title
-                      const displayName = item.title;
+                      // Display task title - description
+                      const displayName = `${item.title}${
+                        item.description ? ` - ${item.description}` : ""
+                      }`;
 
                       return (
                         <TouchableOpacity

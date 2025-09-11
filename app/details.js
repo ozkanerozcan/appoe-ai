@@ -277,7 +277,11 @@ export default function DetailsScreen() {
               <View style={styles.metadataItem}>
                 <Text style={styles.metadataLabel}>Task:</Text>
                 <Text style={styles.metadataValueFlexible}>
-                  {typeof task === "object" ? task.title : task}
+                  {typeof task === "object"
+                    ? `${task.title}${
+                        task.description ? ` - ${task.description}` : ""
+                      }`
+                    : task}
                 </Text>
               </View>
             )}
